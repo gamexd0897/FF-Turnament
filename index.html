@@ -1,0 +1,154 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <title>Free Fire Tournament</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: white;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin-top: 22px;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 13px;
+            margin-top: 8px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border: 1px solid #555;
+            background: #222;
+            color: white;
+            font-size: 16px;
+        }
+
+        input::placeholder {
+            color: #aaa;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 8px;
+            background: #ff3333;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #thanks {
+            display: none;
+            text-align: center;
+            padding-top: 150px;
+        }
+
+        #thanks h1 {
+            font-size: 35px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="form">
+
+        <h1>🔥 WELCOME 🔥</h1>
+
+        <h2>SQUAD NAME</h2>
+        <input type="text" id="squadName" placeholder="Enter Squad Name">
+
+        <h2>PLAYER 1</h2>
+        <input type="text" id="player1Uid" placeholder="Enter UID">
+        <input type="text" id="player1Username" placeholder="Enter Username">
+
+        <h2>PLAYER 2</h2>
+        <input type="text" id="player2Uid" placeholder="Enter UID">
+        <input type="text" id="player2Username" placeholder="Enter Username">
+
+        <h2>PLAYER 3</h2>
+        <input type="text" id="player3Uid" placeholder="Enter UID">
+        <input type="text" id="player3Username" placeholder="Enter Username">
+
+        <h2>PLAYER 4</h2>
+        <input type="text" id="player4Uid" placeholder="Enter UID">
+        <input type="text" id="player4Username" placeholder="Enter Username">
+
+        <button type="button" onclick="submitForm()">SUBMIT</button>
+
+    </div>
+
+    <div id="thanks">
+        <h1>THANKS ❤️</h1>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+
+        tg.ready();
+        tg.expand();
+
+        function submitForm() {
+
+            const squadName = document.getElementById("squadName").value.trim();
+
+            if (squadName === "") {
+                alert("Please enter Squad Name");
+                return;
+            }
+
+            const data = {
+                squad_name: squadName,
+
+                player1: {
+                    uid: document.getElementById("player1Uid").value.trim(),
+                    username: document.getElementById("player1Username").value.trim()
+                },
+
+                player2: {
+                    uid: document.getElementById("player2Uid").value.trim(),
+                    username: document.getElementById("player2Username").value.trim()
+                },
+
+                player3: {
+                    uid: document.getElementById("player3Uid").value.trim(),
+                    username: document.getElementById("player3Username").value.trim()
+                },
+
+                player4: {
+                    uid: document.getElementById("player4Uid").value.trim(),
+                    username: document.getElementById("player4Username").value.trim()
+                }
+            };
+
+            console.log(data);
+
+            document.getElementById("form").style.display = "none";
+            document.getElementById("thanks").style.display = "block";
+        }
+    </script>
+
+</body>
+</html>
+```
