@@ -111,44 +111,51 @@
 
         function submitForm() {
 
-            const squadName = document.getElementById("squadName").value.trim();
+            
+async function submitForm() {
+    const squadName = document.getElementById("squadName").value.trim();
 
-            if (squadName === "") {
-                alert("Please enter Squad Name");
-                return;
-            }
+    if (squadName === "") {
+        alert("Please enter Squad Name");
+        return;
+    }
 
-            const data = {
-                squad_name: squadName,
+    const tg = window.Telegram.WebApp;
 
-                player1: {
-                    uid: document.getElementById("player1Uid").value.trim(),
-                    username: document.getElementById("player1Username").value.trim()
-                },
+    const data = {
+        squad_name: squadName,
+        player1_uid: document.getElementById("player1Uid").value.trim(),
+        player1_username: document.getElementById("player1Username").value.trim(),
+        player2_uid: document.getElementById("player2Uid").value.trim(),
+        player2_username: document.getElementById("player2Username").value.trim(),
+        player3_uid: document.getElementById("player3Uid").value.trim(),
+        player3_username: document.getElementById("player3Username").value.trim(),
+        player4_uid: document.getElementById("player4Uid").value.trim(),
+        player4_username: document.getElementById("player4Username").value.trim()
+    };
 
-                player2: {
-                    uid: document.getElementById("player2Uid").value.trim(),
-                    username: document.getElementById("player2Username").value.trim()
-                },
+    try {
+        const response = await fetch("https://ff-turnament.onrender.com/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Telegram-Init-Data": tg.initData
+            },
+            body: JSON.stringify(data)
+        });
 
-                player3: {
-                    uid: document.getElementById("player3Uid").value.trim(),
-                    username: document.getElementById("player3Username").value.trim()
-                },
+        const result = await response.json();
 
-                player4: {
-                    uid: document.getElementById("player4Uid").value.trim(),
-                    username: document.getElementById("player4Username").value.trim()
-                }
-            };
-
-            console.log(data);
-
-            document.getElementById("form").style.display = "none";
-            document.getElementById("thanks").style.display = "block";
+        if (!response.ok) {
+            alert(result.detail || "Registration failed. Please try again.");
+            return;
         }
-    </script>
 
-</body>
-</html>
-```
+        document.getElementById("form").style.display = "none";
+        document.getElementById("thanks").style.display = "block";
+
+    } catch (error) {
+        alert("Connection error. Please try again.");
+        console.error(error);
+    }
+}
